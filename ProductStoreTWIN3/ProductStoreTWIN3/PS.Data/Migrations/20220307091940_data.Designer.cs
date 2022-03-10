@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PS.Data;
 
 namespace PS.Data.Migrations
 {
     [DbContext(typeof(PSContext))]
-    partial class PSContextModelSnapshot : ModelSnapshot
+    [Migration("20220307091940_data")]
+    partial class data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,7 @@ namespace PS.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryFk")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateProd")
@@ -58,9 +60,7 @@ namespace PS.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -70,7 +70,7 @@ namespace PS.Data.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("CategoryFk");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
 
@@ -79,29 +79,30 @@ namespace PS.Data.Migrations
 
             modelBuilder.Entity("PS.Domain.Provider", b =>
                 {
-                    b.Property<int>("ProviderCode")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ConfirmPassword")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
                     b.Property<string>("PassWord")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProviderCode");
+                    b.HasKey("Id");
 
                     b.ToTable("Providers");
                 });
@@ -111,12 +112,12 @@ namespace PS.Data.Migrations
                     b.Property<int>("ProductsProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProvidersProviderCode")
+                    b.Property<int>("ProvidersId")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductsProductId", "ProvidersProviderCode");
+                    b.HasKey("ProductsProductId", "ProvidersId");
 
-                    b.HasIndex("ProvidersProviderCode");
+                    b.HasIndex("ProvidersId");
 
                     b.ToTable("ProductProvider");
                 });
@@ -145,7 +146,7 @@ namespace PS.Data.Migrations
                 {
                     b.HasOne("PS.Domain.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryFk");
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });
@@ -160,7 +161,7 @@ namespace PS.Data.Migrations
 
                     b.HasOne("PS.Domain.Provider", null)
                         .WithMany()
-                        .HasForeignKey("ProvidersProviderCode")
+                        .HasForeignKey("ProvidersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

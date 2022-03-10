@@ -6,9 +6,9 @@ namespace PS.Domain
 {
    public class Chemical : Product
     {
-        public String City { get; set; }
+        public Adress Adress { get; set; } = new Adress();
         public String LabName { get; set; }
-        public String StreetAddress { get; set; }
+     
         public override void GetMyType()
         {
             //Console.WriteLine("Je suis un produit");
@@ -17,7 +17,7 @@ namespace PS.Domain
         }
         public override string ToString()
         {
-            return base.ToString()+"City :"+City;
+            return base.ToString()+"City :"+Adress.City;
         }
     }
     

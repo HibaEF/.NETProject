@@ -54,35 +54,35 @@ namespace PS.GUI
             {
                 Name="Chemical1",
                 Price=500,
-                City="Paris"
+         
     
             };
-            Product c4 = new Chemical()
+            
+            Chemical c4 = new Chemical()
             {
                 Name = "Chemical4",
                 Price = 50,
-                City = "Paris"
 
             };
-            Product c2= new Chemical()
+            c4.Adress.City = "Paris";
+            Chemical c2 = new Chemical()
             {
                 Name = "Chemical2",
                 Price = 300,
-                City = "Tunis"
+               
 
             };
-            Product c3 = new Chemical()
+            Chemical c3 = new Chemical()
             {
                 Name = "Chemical3",
                 Price = 700,
-                City = "Madrid"
 
             };
-            Product c5 = new Chemical()
+            Chemical c5 = new Chemical()
             {
                 Name = "Chemical5",
                 Price = 70,
-                City = "Madrid"
+              
 
             };
             Product b = new Biological();
@@ -114,7 +114,7 @@ namespace PS.GUI
             Provider provider = new Provider();
             List<Product> products = new List<Product>()
             {
-                p1,p2,p3,c1,c2,c3,c4,c5
+                c4
             };
             provider.UserName="Oumayma";
            // products.Add(p1);
